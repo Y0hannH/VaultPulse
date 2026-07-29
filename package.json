@@ -2,7 +2,7 @@
   "name": "vaultpulse",
   "displayName": "VaultPulse",
   "description": "Read-only Azure Key Vault secrets viewer for VS Code — multi-vault, multi-tenant",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "evolve-data",
   "license": "MIT",
   "icon": "resources/icon.png",

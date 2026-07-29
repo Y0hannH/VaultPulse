@@ -2,7 +2,13 @@
 
 All notable changes to VaultPulse are documented here.
 
-## [0.1.0] - Unreleased
+## [0.2.0] - Unreleased
+
+### Changed
+- Replaced the flat placeholder marketplace icon with a polished 256x256 version (gradient background, pulse-ring accents, glossy lock finish)
+- README no longer explains VaultPulse's own behavior by comparison to a sibling product
+
+## [0.1.0] - 2026-07-29
 
 ### Added
 - Initial release: read-only Azure Key Vault secrets viewer
