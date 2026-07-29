@@ -114,14 +114,33 @@
     ],
     "menus": {
       "commandPalette": [
-        { "command": "vaultpulse.openDocumentation" },
-        { "command": "vaultpulse.filter" },
-        { "command": "vaultpulse.clearFilter" },
-        { "command": "vaultpulse.addVault" },
-        { "command": "vaultpulse.refresh" },
-        { "command": "vaultpulse.revealSecret", "when": "false" },
-        { "command": "vaultpulse.hideSecret", "when": "false" },
-        { "command": "vaultpulse.copySecret", "when": "false" }
+        {
+          "command": "vaultpulse.openDocumentation"
+        },
+        {
+          "command": "vaultpulse.filter"
+        },
+        {
+          "command": "vaultpulse.clearFilter"
+        },
+        {
+          "command": "vaultpulse.addVault"
+        },
+        {
+          "command": "vaultpulse.refresh"
+        },
+        {
+          "command": "vaultpulse.revealSecret",
+          "when": "false"
+        },
+        {
+          "command": "vaultpulse.hideSecret",
+          "when": "false"
+        },
+        {
+          "command": "vaultpulse.copySecret",
+          "when": "false"
+        }
       ],
       "view/title": [
         {
@@ -178,7 +197,10 @@
           "markdownDescription": "Azure Key Vaults accessible from this workspace. No auto-discovery — each vault must be declared explicitly, easiest via the **VaultPulse: Add Vault** command. Each entry needs an `alias` (display name) and a `vaultUri` (starting with `https://`); `tenantId` is optional — omit it to use your default Azure account, or set it when a vault lives in a different Azure AD tenant. Example:\n```json\n\"vaultpulse.vaults\": [\n  { \"alias\": \"Client A - Prod\", \"vaultUri\": \"https://clienta-prod.vault.azure.net\" },\n  { \"alias\": \"Client B - Prod\", \"vaultUri\": \"https://clientb-prod.vault.azure.net\", \"tenantId\": \"11111111-2222-3333-4444-555555555555\" }\n]\n```",
           "items": {
             "type": "object",
-            "required": ["alias", "vaultUri"],
+            "required": [
+              "alias",
+              "vaultUri"
+            ],
             "properties": {
               "alias": {
                 "type": "string",
@@ -215,6 +237,7 @@
     "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
+    "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.27.3",
     "eslint": "^10.0.3",
     "typescript": "^5.3.3"

@@ -1,14 +1,23 @@
-# VaultPulse
+# 🔐 VaultPulse
 
-Read-only Azure Key Vault secrets viewer for VS Code — browse, reveal, and copy secrets across multiple vaults and clients without leaving the editor.
+> Read-only Azure Key Vault secrets viewer — right inside VS Code.
 
-Part of the [Evolve](https://evolve-data.fr) data consulting toolset, alongside [FabricPulse](https://github.com/Y0hannH/FabricPulse) (Microsoft Fabric pipeline monitoring) and dbt Forge (dbt authoring).
+![VS Code](https://img.shields.io/badge/VS%20Code-%5E1.85-007ACC?style=flat-square&logo=visualstudiocode)
+![Version](https://img.shields.io/badge/Version-0.1.0-blue?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-00B4D8?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+
+---
 
 ## What is VaultPulse?
 
 VaultPulse gives you a TreeView of the Azure Key Vaults you work with — grouped by client or environment — so you can check a connection string or API key without switching to the Azure Portal or the `az` CLI. Secret values are masked by default and only fetched from Azure when you explicitly reveal or copy them.
 
+Part of the [Evolve](https://evolve-data.fr) data consulting toolset, alongside [FabricPulse](https://github.com/Y0hannH/FabricPulse) (Microsoft Fabric pipeline monitoring) and dbt Forge (dbt authoring).
+
 **v1 is read-only.** Creating, editing, or deleting secrets, and managing keys/certificates, are out of scope for now.
+
+---
 
 ## Features
 
@@ -18,6 +27,8 @@ VaultPulse gives you a TreeView of the Azure Key Vaults you work with — groupe
 - Copy a secret's value to the clipboard
 - Manage several vaults / several clients from a single panel
 - Filter the tree by vault alias or secret name
+
+---
 
 ## Getting Started
 
@@ -36,6 +47,8 @@ VaultPulse gives you a TreeView of the Azure Key Vaults you work with — groupe
 
 Open the VaultPulse icon in the Activity Bar, expand a vault to list its secrets, and click the eye icon on a secret to reveal it.
 
+---
+
 ## Authentication
 
 No manual `az login` required. Same approach as FabricPulse: when you expand a vault for the first time, VaultPulse tries your existing **Azure CLI session** silently in the background; if none is found (or it doesn't have access to that tenant), it automatically opens a **browser tab** for you to sign in interactively — no terminal step needed.
@@ -44,6 +57,8 @@ No manual `az login` required. Same approach as FabricPulse: when you expand a v
 - Otherwise, a browser tab opens once per tenant; sign in with the Microsoft account that has access to the vault, and the tab confirms success — you can close it and go back to VS Code.
 - Being signed in to the built-in **"Azure Resources"** extension does **not** count as either of these — it's a separate sign-in session VaultPulse doesn't read. If a vault fails to expand and you're relying on that extension only, use the browser sign-in flow described above instead.
 - If a vault lives in a **different Azure AD tenant** than your default account, set its `tenantId` (see [Configuration](#configuration)) so the right sign-in prompt (CLI or browser) targets that tenant.
+
+---
 
 ## Configuration
 
@@ -88,10 +103,13 @@ A couple of things that are easy to miss:
 - Hand-editing the JSON skips the validation that **Add Vault** does (no `https://` check, no duplicate check) — a typo just shows up later as a vault that fails to expand.
 - The tree picks up changes to `.vscode/settings.json` automatically; you don't need to run **Refresh** after saving.
 
+---
+
 ## Commands
 
 | Command | Description |
 |---|---|
+| `vaultpulse.openDocumentation` | Open this documentation in VS Code's Markdown Preview |
 | `vaultpulse.filter` | Filter the tree by vault alias, or by secret name for vaults already expanded this session |
 | `vaultpulse.clearFilter` | Clear the active filter |
 | `vaultpulse.addVault` | Add a vault (prompts for alias + URI, writes to workspace settings) |
@@ -109,6 +127,8 @@ Click the search icon in the panel toolbar (or run **VaultPulse: Filter Vaults &
 - Vaults you haven't expanded yet are matched on alias only — filtering never triggers a new Azure call.
 
 The active filter shows next to the view title, and **Clear Filter** appears in the toolbar while a filter is set.
+
+---
 
 ## Troubleshooting
 
@@ -146,6 +166,8 @@ VaultPulse does not collect any data, and never persists secret values.
 
 Copying a secret uses `vscode.env.clipboard.writeText()` only — VaultPulse never writes secret values anywhere else.
 
+---
+
 ## Security posture
 
 - **Workspace Trust**: VaultPulse declares `capabilities.untrustedWorkspaces.supported: false` and stays disabled in untrusted workspaces. Without this, an untrusted/cloned folder could ship a crafted `.vscode/settings.json` that points VaultPulse at an attacker-chosen vault using your own credentials the moment you expand it.
@@ -160,10 +182,18 @@ Copying a secret uses `vscode.env.clipboard.writeText()` only — VaultPulse nev
 
 Multi-vault, multi-tenant TreeView; reveal/hide; copy to clipboard; RBAC vs Access Policies error handling. Read-only — no key/certificate management, no create/update/delete.
 
+---
+
 ## Contributing
 
 Issues and PRs welcome at [github.com/Y0hannH/VaultPulse](https://github.com/Y0hannH/VaultPulse).
 
+---
+
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT © 2026 [Evolve](https://evolve-data.fr) — Yohann
+
+---
+
+*Built with ♥ by Evolve*

@@ -19,6 +19,12 @@ eslint.config.js
 # Maps (not needed in production)
 **/*.map
 
+# Type declarations & docs from unbundled deps (@azure/*) — dev-time only,
+# not read at runtime, verified safe to drop (unlike msal-browser, which
+# @azure/identity's own commonjs build does reference internally).
+node_modules/**/*.d.ts
+node_modules/**/*.md
+
 # Misc
 **/.DS_Store
 *.vsix
