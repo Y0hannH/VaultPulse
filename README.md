@@ -13,7 +13,7 @@
 
 VaultPulse gives you a TreeView of the Azure Key Vaults you work with — grouped by client or environment — so you can check a connection string or API key without switching to the Azure Portal or the `az` CLI. Secret values are masked by default and only fetched from Azure when you explicitly reveal or copy them.
 
-Part of the [Evolve](https://evolve-data.fr) data consulting toolset, alongside [FabricPulse](https://github.com/Y0hannH/FabricPulse) (Microsoft Fabric pipeline monitoring) and dbt Forge (dbt authoring).
+Built by [Evolve](https://evolve-data.fr), a data consulting studio.
 
 **v1 is read-only.** Creating, editing, or deleting secrets, and managing keys/certificates, are out of scope for now.
 
@@ -51,7 +51,7 @@ Open the VaultPulse icon in the Activity Bar, expand a vault to list its secrets
 
 ## Authentication
 
-No manual `az login` required. Same approach as FabricPulse: when you expand a vault for the first time, VaultPulse tries your existing **Azure CLI session** silently in the background; if none is found (or it doesn't have access to that tenant), it automatically opens a **browser tab** for you to sign in interactively — no terminal step needed.
+No manual `az login` required. When you expand a vault for the first time, VaultPulse tries your existing **Azure CLI session** silently in the background; if none is found (or it doesn't have access to that tenant), it automatically opens a **browser tab** for you to sign in interactively — no terminal step needed.
 
 - If you already run `az login` as part of your workflow, that session is picked up automatically and nothing else happens.
 - Otherwise, a browser tab opens once per tenant; sign in with the Microsoft account that has access to the vault, and the tab confirms success — you can close it and go back to VS Code.
