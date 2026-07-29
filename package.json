@@ -1,0 +1,222 @@
+{
+  "name": "vaultpulse",
+  "displayName": "VaultPulse",
+  "description": "Read-only Azure Key Vault secrets viewer for VS Code — multi-vault, multi-tenant",
+  "version": "0.1.0",
+  "publisher": "evolve-data",
+  "license": "MIT",
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Y0hannH/VaultPulse"
+  },
+  "homepage": "https://github.com/Y0hannH/VaultPulse#readme",
+  "bugs": {
+    "url": "https://github.com/Y0hannH/VaultPulse/issues"
+  },
+  "galleryBanner": {
+    "color": "#16213e",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "azure",
+    "key vault",
+    "keyvault",
+    "secrets",
+    "security",
+    "multi-tenant"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "VaultPulse reads Key Vault URIs from workspace settings and would authenticate against them on your behalf. An untrusted workspace could point it at an attacker-chosen vault, so it stays disabled until you trust the folder."
+    }
+  },
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vaultpulse-sidebar",
+          "title": "VaultPulse",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "vaultpulse-sidebar": [
+        {
+          "id": "vaultpulse.vaultsView",
+          "name": "Vaults",
+          "type": "tree"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "vaultpulse.vaultsView",
+        "when": "vaultpulse.filterActive",
+        "contents": "🔍 No matches for the current filter.\n\n[$(clear-all) Clear Filter](command:vaultpulse.clearFilter)"
+      },
+      {
+        "view": "vaultpulse.vaultsView",
+        "contents": "🔐 No vaults configured yet.\n\n[$(add) Add Vault](command:vaultpulse.addVault)\n\n[$(book) Documentation](command:vaultpulse.openDocumentation)\n\nVaults are declared per workspace in `.vscode/settings.json` under `vaultpulse.vaults`."
+      }
+    ],
+    "commands": [
+      {
+        "command": "vaultpulse.openDocumentation",
+        "title": "VaultPulse: Open Documentation",
+        "icon": "$(book)"
+      },
+      {
+        "command": "vaultpulse.filter",
+        "title": "VaultPulse: Filter Vaults & Secrets",
+        "icon": "$(search)"
+      },
+      {
+        "command": "vaultpulse.clearFilter",
+        "title": "VaultPulse: Clear Filter",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "vaultpulse.addVault",
+        "title": "VaultPulse: Add Vault",
+        "icon": "$(add)"
+      },
+      {
+        "command": "vaultpulse.refresh",
+        "title": "VaultPulse: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "vaultpulse.revealSecret",
+        "title": "VaultPulse: Reveal Secret",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "vaultpulse.hideSecret",
+        "title": "VaultPulse: Hide Secret",
+        "icon": "$(eye-closed)"
+      },
+      {
+        "command": "vaultpulse.copySecret",
+        "title": "VaultPulse: Copy Secret Value",
+        "icon": "$(copy)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        { "command": "vaultpulse.openDocumentation" },
+        { "command": "vaultpulse.filter" },
+        { "command": "vaultpulse.clearFilter" },
+        { "command": "vaultpulse.addVault" },
+        { "command": "vaultpulse.refresh" },
+        { "command": "vaultpulse.revealSecret", "when": "false" },
+        { "command": "vaultpulse.hideSecret", "when": "false" },
+        { "command": "vaultpulse.copySecret", "when": "false" }
+      ],
+      "view/title": [
+        {
+          "command": "vaultpulse.filter",
+          "when": "view == vaultpulse.vaultsView",
+          "group": "navigation@1"
+        },
+        {
+          "command": "vaultpulse.clearFilter",
+          "when": "view == vaultpulse.vaultsView && vaultpulse.filterActive",
+          "group": "navigation@2"
+        },
+        {
+          "command": "vaultpulse.addVault",
+          "when": "view == vaultpulse.vaultsView",
+          "group": "navigation@3"
+        },
+        {
+          "command": "vaultpulse.refresh",
+          "when": "view == vaultpulse.vaultsView",
+          "group": "navigation@4"
+        },
+        {
+          "command": "vaultpulse.openDocumentation",
+          "when": "view == vaultpulse.vaultsView",
+          "group": "9_help"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "vaultpulse.revealSecret",
+          "when": "view == vaultpulse.vaultsView && viewItem == secret-hidden",
+          "group": "inline@1"
+        },
+        {
+          "command": "vaultpulse.hideSecret",
+          "when": "view == vaultpulse.vaultsView && viewItem == secret-revealed",
+          "group": "inline@1"
+        },
+        {
+          "command": "vaultpulse.copySecret",
+          "when": "view == vaultpulse.vaultsView && viewItem =~ /^secret-/",
+          "group": "inline@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "VaultPulse",
+      "properties": {
+        "vaultpulse.vaults": {
+          "type": "array",
+          "scope": "resource",
+          "default": [],
+          "markdownDescription": "Azure Key Vaults accessible from this workspace. No auto-discovery — each vault must be declared explicitly, easiest via the **VaultPulse: Add Vault** command. Each entry needs an `alias` (display name) and a `vaultUri` (starting with `https://`); `tenantId` is optional — omit it to use your default Azure account, or set it when a vault lives in a different Azure AD tenant. Example:\n```json\n\"vaultpulse.vaults\": [\n  { \"alias\": \"Client A - Prod\", \"vaultUri\": \"https://clienta-prod.vault.azure.net\" },\n  { \"alias\": \"Client B - Prod\", \"vaultUri\": \"https://clientb-prod.vault.azure.net\", \"tenantId\": \"11111111-2222-3333-4444-555555555555\" }\n]\n```",
+          "items": {
+            "type": "object",
+            "required": ["alias", "vaultUri"],
+            "properties": {
+              "alias": {
+                "type": "string",
+                "description": "Display name shown in the tree (e.g. \"Client A - Prod\")"
+              },
+              "vaultUri": {
+                "type": "string",
+                "format": "uri",
+                "description": "Key Vault URI, must start with https:// (e.g. https://clienta-prod.vault.azure.net)"
+              },
+              "tenantId": {
+                "type": "string",
+                "description": "Optional Azure AD tenant ID (GUID). Only needed if this vault's tenant differs from your default signed-in account."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "node esbuild.js",
+    "watch": "tsc -watch -p ./",
+    "package": "node esbuild.js --production",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.5.0",
+    "@azure/keyvault-secrets": "^4.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "esbuild": "^0.27.3",
+    "eslint": "^10.0.3",
+    "typescript": "^5.3.3"
+  }
+}

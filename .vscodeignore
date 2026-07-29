@@ -1,0 +1,24 @@
+# Source files (bundled by esbuild)
+src/**/*.ts
+
+# Config & dev files
+.vscode/**
+.claude/**
+.git/**
+.gitignore
+tsconfig.json
+esbuild.js
+eslint.config.js
+
+# Dependencies: most are bundled by esbuild, but @azure/identity and
+# @azure/keyvault-secrets are kept external (see esbuild.js) because
+# @azure/identity pulls in an ESM-only package that breaks under bundling.
+# Don't blanket-ignore node_modules — `vsce package` prunes devDependencies
+# automatically based on package.json and ships the rest.
+
+# Maps (not needed in production)
+**/*.map
+
+# Misc
+**/.DS_Store
+*.vsix
